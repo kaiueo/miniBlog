@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}miniBlog - 登录{% endblock %}
+{% block page_content %}
+    <div class="page-header">
+        <h1>登录</h1>
+    </div>
+
+    <div class="col-md-4">
+        {{ wtf.quick_form(form) }}
+    <br/>
+    <p>
+        New User??
+        <a href="{{ url_for('auth.register') }}">Register</a>
+    </p>
+    <p>
+        Forgot your password?
+        <a href="{{ url_for('auth.password_reset_request') }}">Reset Password</a>
+    </p>
+    </div>
+
+{% endblock %}
