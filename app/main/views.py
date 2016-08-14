@@ -11,12 +11,6 @@ from ..models import User, Role, Post, Comment
 
 @main.route('/', methods=['GET', 'POST'])
 def index():
-    form = PostForm()
-    if current_user.can(Permission.WRITE_ARTICLES) and \
-            form.validate_on_submit():
-        post = Post(body=form.body.data, author=current_user._get_current_object())
-        db.session.add(post)
-        return redirect(url_for('.index'))
     show_followed = False
     if current_user.is_authenticated:
         show_followed = bool(request.cookies.get('show_followed', ''))
@@ -29,7 +23,7 @@ def index():
                                                                 per_page=current_app.config['MINIBLOG_POST_PER_PAGE'],
                                                                 error_out=False)
     posts = pagination.items
-    return render_template('index.html', form=form, posts=posts, pagination=pagination, show_followed=show_followed)
+    return render_template('index.html', posts=posts, pagination=pagination, show_followed=show_followed)
 
 
 @main.route('/user/<username>')
@@ -224,4 +218,17 @@ def moderate_disable(id):
     comment.disabled = True
     db.session.add(comment)
     return redirect(url_for('.moderate', page=request.args.get('page', 1, type=int)))
+
+
+@main.route('/post/new', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.WRITE_ARTICLES)
+def new_post():
+    form = PostForm()
+    if form.validate_on_submit():
+        post = Post(title=form.title.data, body=form.body.data, author=current_user._get_current_object())
+        db.session.add(post)
+        return redirect(url_for('.index'))
+    return render_template('new_post.html', form=form)
+
 

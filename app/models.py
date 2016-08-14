@@ -264,6 +264,7 @@ class AnonymousUser(AnonymousUserMixin):
 class Post(db.Model):
     __tablename__ = 'posts'
     id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(128), index=True)
     body = db.Column(db.Text)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     body_html = db.Column(db.Text)
