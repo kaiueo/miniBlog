@@ -266,6 +266,8 @@ class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(128), index=True)
     body = db.Column(db.Text)
+    intro = db.Column(db.Text)
+    cover = db.Column(db.String(1024))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     body_html = db.Column(db.Text)
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))

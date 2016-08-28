@@ -1,6 +1,8 @@
 .profile-thumbnail {
     position: absolute;
+	display: none;
 }
+
 .profile-header {
     min-height: 260px;
     margin-left: 280px;
@@ -22,14 +24,13 @@ ul.posts li.post {
     padding: 8px;
     border-bottom: 1px solid #e0e0e0;
 }
-ul.posts li.post:hover {
-    background-color: #f0f0f0;
-}
+
 div.post-date {
     float: right;
 }
-div.post-author {
-    font-weight: bold;
+
+div.post-author>a{
+	color: #266b77;
 }
 div.post-thumbnail {
     position: absolute;
@@ -105,3 +106,23 @@ div.flask-pagedown-preview h3 {
 .table.followers tr {
     border-bottom: 1px solid #e0e0e0;
 }
+div.post-body p{
+	font-size: 1.2em;
+}
+
+.post-cover{
+	text-align: center;
+}
+
+div.post-title>a{
+	color: #000000;
+}
+
+div.post-header a:hover{
+	text-decoration: none;
+
+}
+
+
+
+

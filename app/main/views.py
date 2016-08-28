@@ -106,10 +106,16 @@ def edit(id):
     form = PostForm()
     if form.validate_on_submit():
         post.body = form.body.data
+        post.intro = form.intro.data
+        post.cover = form.cover.data
+        post.title = form.title.data
         db.session.add(post)
         flash('The post has been updated.')
         return redirect(url_for('.post', id=post.id))
     form.body.data = post.body
+    form.intro.data = post.intro
+    form.cover.data = post.cover
+    form.title.data = post.title
     return render_template('edit_post.html', form=form)
 
 
@@ -226,7 +232,11 @@ def moderate_disable(id):
 def new_post():
     form = PostForm()
     if form.validate_on_submit():
-        post = Post(title=form.title.data, body=form.body.data, author=current_user._get_current_object())
+        intro = form.intro.data
+        if intro is None:
+            intro = form.body.data[0, 50]
+        post = Post(title=form.title.data, cover=form.cover.data, intro=intro, body=form.body.data,
+                    author=current_user._get_current_object())
         db.session.add(post)
         return redirect(url_for('.index'))
     return render_template('new_post.html', form=form)
